@@ -9,6 +9,10 @@ FROM dockerfile/java:oracle-java8
 
 ENV ES_PKG_NAME elasticsearch-1.5.0
 
+RUN apt-get install curl
+
+RUN mkdir -p /data
+
 # Install Elasticsearch.
 RUN \
   cd / && \
@@ -21,7 +25,7 @@ RUN \
 VOLUME ["/data"]
 
 # Mount elasticsearch.yml config
-ADD config/elasticsearch.yml /elasticsearch/config/elasticsearch.yml
+RUN curl -s -o /elasticsearch/config/elasticsearch.yml https://raw.githubusercontent.com/david-strejc/elasticsearch/master/config/elasticsearch.yml
 
 # Define working directory.
 WORKDIR /data
